@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Calidad de Estructuras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Control de Calidad de Estructuras</h1>
+        
+        <!-- Código Técnico -->
+        <div class="form-group">
+            <label for="codigoTecnico">Código Técnico:</label>
+            <input type="text" id="codigoTecnico" placeholder="Ej: TEC-001" class="uppercase-input">
+        </div>
+
+        <!-- Gestión de Segmentos -->
+        <div class="segmentos-container">
+            <h3>Gestión de Segmentos</h3>
+            <div class="segmentos-form">
+                <input type="text" id="nuevoSegmento" placeholder="Ingrese código de segmento">
+                <button id="agregarSegmento" class="btn-purple">Agregar Segmento</button>
+            </div>
+            <div class="segmentos-lista" id="listaSegmentos">
+                <p>No hay segmentos agregados</p>
+            </div>
+        </div>
+        
+        <!-- Gestión de Bloques -->
+        <div class="segmentos-container">
+            <h3>Gestión de Bloques</h3>
+            <div class="segmentos-form">
+                <input type="text" id="nuevoBloque" placeholder="Ingrese número de bloque">
+                <button id="agregarBloque" class="btn-gray">Agregar Bloque</button>
+            </div>
+            <div class="segmentos-lista" id="listaBloques">
+                <p>No hay bloques agregados</p>
+            </div>
+        </div>
+        
+        <!-- Gestión de Comentarios Predeterminados -->
+        <div class="segmentos-container">
+            <h3>Comentarios Predeterminados</h3>
+            <div class="segmentos-form">
+                <input type="text" id="nuevoComentario" placeholder="Ingrese nuevo comentario">
+                <button id="agregarComentario" class="btn-blue">Agregar Comentario</button>
+            </div>
+            <div class="segmentos-lista" id="listaComentarios">
+                <p>No hay comentarios predeterminados</p>
+            </div>
+        </div>
+        
+        <!-- Formulario principal -->
+        <div class="form-group">
+            <label for="segmento">Segmento:</label>
+            <select id="segmento" disabled>
+                <option value="">-- Agregue segmentos primero --</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="bloque">Bloque:</label>
+            <select id="bloque" disabled>
+                <option value="">-- Agregue bloques primero --</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="numeroEstructura">Número de Estructura:</label>
+            <input type="text" id="numeroEstructura" placeholder="Número de estructura">
+        </div>
+        
+        <div class="form-group">
+            <label for="comentarioPersonalizado">Comentario Personalizado:</label>
+            <textarea id="comentarioPersonalizado" rows="3" placeholder="Ingrese sus observaciones" disabled></textarea>
+        </div>
+        
+        <div class="form-group comentario-predeterminado-container">
+            <label for="comentarioPredeterminado">Comentario Predeterminado:</label>
+            <div class="comentario-select-container">
+                <select id="comentarioPredeterminado" disabled>
+                    <option value="">-- Agregue comentarios primero --</option>
+                </select>
+                <button id="quitarComentarioPred" class="btn-red" disabled>×</button>
+            </div>
+        </div>
+        
+        <div class="botones">
+            <button id="guardar" class="btn-blue">Guardar Registro</button>
+            <button id="generar" class="btn-green">Generar Archivo</button>
+            <button id="limpiar" class="btn-red">Limpiar Todo</button>
+        </div>
+        
+        <div id="registrosGuardados">
+            <h3>Registros Guardados</h3>
+            <div id="listaRegistros">
+                <p>No hay registros guardados</p>
+            </div>
+        </div>
+        
+        <div id="output"></div>
+    </div>
+
+    <footer>
+        Desarrollado por: Psociety.sv
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
