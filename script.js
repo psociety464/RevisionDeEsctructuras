@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
         quitarComentarioPred: document.getElementById('quitarComentarioPred'),
         
         numeroEstructura: document.getElementById('numeroEstructura'),
+        parcela: document.getElementById('parcela'),
+        tipoCultivo: document.getElementById('tipoCultivo'),
         comentarioPersonalizado: document.getElementById('comentarioPersonalizado'),
         
         btnGuardar: document.getElementById('guardar'),
@@ -155,6 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
             registros.map((reg, i) => {
                 let detalles = [];
                 
+                if (reg.parcela) detalles.push(`Parcela: ${reg.parcela}`);
+                if (reg.tipoCultivo) detalles.push(`Cultivo: ${reg.tipoCultivo}`);
                 if (reg.comentarioPersonalizado) {
                     detalles.push(`Personalizado: ${reg.comentarioPersonalizado.substring(0, 20)}...`);
                 } else if (reg.comentarioPredeterminado) {
@@ -339,6 +343,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const segmento = elementos.selectSegmento.value;
         const bloque = elementos.selectBloque.value;
         const numeroEstructura = elementos.numeroEstructura.value;
+        const parcela = elementos.parcela.value;
+        const tipoCultivo = elementos.tipoCultivo.value;
         const comentarioPersonalizado = elementos.comentarioPersonalizado.value.trim();
         const comentarioPredeterminado = elementos.selectComentario.value;
         
@@ -346,6 +352,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!segmento) return alert('Seleccione un segmento');
         if (!bloque) return alert('Seleccione un bloque');
         if (!numeroEstructura) return alert('Ingrese el número de estructura');
+        if (!parcela) return alert('Seleccione una parcela');
+        if (!tipoCultivo) return alert('Seleccione el tipo de cultivo');
         if (!comentarioPersonalizado && !comentarioPredeterminado) {
             return alert('Ingrese al menos un comentario (personalizado o predeterminado)');
         }
@@ -355,6 +363,8 @@ document.addEventListener('DOMContentLoaded', function() {
             segmento,
             bloque,
             numeroEstructura,
+            parcela,
+            tipoCultivo,
             comentarioPersonalizado: comentarioPersonalizado || null,
             comentarioPredeterminado: comentarioPredeterminado || null,
             fecha: new Date().toLocaleDateString('es-ES', { 
@@ -371,6 +381,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Limpiar campos
         elementos.numeroEstructura.value = '';
+        elementos.parcela.value = '';
+        elementos.tipoCultivo.value = '';
         elementos.comentarioPersonalizado.value = '';
         elementos.comentarioPersonalizado.disabled = false;
         elementos.selectComentario.value = '';
@@ -400,6 +412,8 @@ document.addEventListener('DOMContentLoaded', function() {
         registros.forEach((reg, i) => {
             contenido += `REGISTRO ${i + 1}:\n`;
             contenido += `Código: ${reg.segmento}-${reg.bloque}-${reg.numeroEstructura}\n`;
+            contenido += `Parcela: ${reg.parcela}\n`;
+            contenido += `Tipo de Cultivo: ${reg.tipoCultivo}\n`;
             
             if (reg.comentarioPersonalizado) {
                 contenido += `Comentario Personalizado: ${reg.comentarioPersonalizado}\n`;
@@ -414,6 +428,29 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Resumen estadístico
         contenido += 'RESUMEN ESTADÍSTICO:\n';
+        contenido += `${'-'.repeat(40)}\n`;
+        
+        // Conteo por parcela
+        contenido += 'POR PARCELAS:\n';
+        const conteoParcelas = registros.reduce((acc, reg) => {
+            acc[reg.parcela] = (acc[reg.parcela] || 0) + 1;
+            return acc;
+        }, {});
+        
+        for (const [parcela, cantidad] of Object.entries(conteoParcelas)) {
+            contenido += `${parcela}: ${cantidad}\n`;
+        }
+        
+        contenido += '\nPOR TIPO DE CULTIVO:\n';
+        const conteoCultivos = registros.reduce((acc, reg) => {
+            acc[reg.tipoCultivo] = (acc[reg.tipoCultivo] || 0) + 1;
+            return acc;
+        }, {});
+        
+        for (const [cultivo, cantidad] of Object.entries(conteoCultivos)) {
+            contenido += `${cultivo}: ${cantidad}\n`;
+        }
+        
         contenido += `${'-'.repeat(40)}\n`;
         contenido += `Total de estructuras revisadas: ${registros.length}\n`;
         contenido += `Segmentos trabajados: ${segmentosTrab.length}\n`;
